@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SuffixTextField: UITextField {
+public class SuffixTextField: UITextField {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -18,16 +18,16 @@ class SuffixTextField: UITextField {
     }
     
     // A suffix string that will appear just to the right of visible text
-    var suffix:String?
+    public var suffix:String?
     
     // A prefix string that will appear just to the left of visible text
-    var prefix:String?
+    public var prefix:String?
     
     // Color for the suffix, default to the same color as the text
-    var suffixTextColor:UIColor?
+    public var suffixTextColor:UIColor?
 
     // Color for the prefix, default to the same color as the text
-    var prefixTextColor:UIColor?
+    public var prefixTextColor:UIColor?
     
     // Fallback text color
     private let placeHolderTextColor = UIColor(red: 120/255.0, green: 120/255.0, blue: 120/255.0, alpha: 1)
