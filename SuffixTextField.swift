@@ -11,7 +11,7 @@ import UIKit
 
 public class SuffixTextField: UITextField {
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         clipsToBounds = false
@@ -32,7 +32,7 @@ public class SuffixTextField: UITextField {
     // Fallback text color
     private let placeHolderTextColor = UIColor(red: 120/255.0, green: 120/255.0, blue: 120/255.0, alpha: 1)
     
-    override func drawRect(rect: CGRect) {
+    override public func drawRect(rect: CGRect) {
         super.drawRect(rect)
         
         // Only draw suffix when we have a suffix and a text
