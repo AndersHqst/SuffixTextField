@@ -11,13 +11,25 @@ import UIKit
 
 class SuffixTextField: UITextField {
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        clipsToBounds = false
+    }
+    
     // A suffix string that will appear just to the right of visible text
     var suffix:String?
     
+    // A prefix string that will appear just to the left of visible text
+    var prefix:String?
+    
     // Color for the suffix, default to the same color as the text
     var suffixTextColor:UIColor?
+
+    // Color for the prefix, default to the same color as the text
+    var prefixTextColor:UIColor?
     
-    // Fallback suffix text color
+    // Fallback text color
     private let placeHolderTextColor = UIColor(red: 120/255.0, green: 120/255.0, blue: 120/255.0, alpha: 1)
     
     override func drawRect(rect: CGRect) {
@@ -58,5 +70,46 @@ class SuffixTextField: UITextField {
             // Draw it
             (suffix! as NSString).drawInRect(rect, withAttributes: attrs)
         }
+        
+        // Only prefix when we have a prefix and a text
+        if (prefix ?? "").isEmpty == false && (text ?? "").isEmpty == false {
+            
+            // We use some handy methods on NSString
+            let text = (self.text ?? "") as NSString
+            
+            // The x position of the prefix
+            var prefixXPosition:CGFloat = 0
+            
+            // Spacing between prefix and text
+            let spacing:CGFloat = 3.0
+            
+            // Font and color for the prefix
+            let color = prefixTextColor ?? self.textColor ?? placeHolderTextColor
+            let attrs:[String: AnyObject] = [NSFontAttributeName: self.font!, NSForegroundColorAttributeName: color]
+            
+            // Calc the x position of the prefix
+            if textAlignment == .Center {
+                let fieldWidth = frame.size.width
+                let textWidth = text.sizeWithAttributes(attrs).width
+                prefixXPosition = (fieldWidth / 2) - (textWidth / 2)
+            }
+            
+            prefixXPosition -= (prefix! as NSString).sizeWithAttributes(attrs).width
+            prefixXPosition -= spacing
+            
+            // Calc the rect to draw the suffix in
+            let height = text.sizeWithAttributes(attrs).height
+            let verticalCenter = height / 2.0
+            let top:CGFloat = frame.size.height / 2 - ceil(verticalCenter)
+            let width = (prefix! as NSString).sizeWithAttributes(attrs).width
+            let rect = CGRectMake(prefixXPosition, top, width, height)
+            
+            // Draw it
+            (prefix! as NSString).drawInRect(rect, withAttributes: attrs)
+        }
+    }
+    
+    @objc func textFieldDidChange(sender: AnyObject) {
+        setNeedsDisplay()
     }
 }
