@@ -5,6 +5,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/AndersHqst/SuffixTextField"
   s.license          = 'MIT'
   s.source           = { :git => "https://github.com/AndersHqst/SuffixTextField", :tag => s.version }
+  s.authors          = "AndersHqst"
 
   s.ios.deployment_target = '8.0'
 
